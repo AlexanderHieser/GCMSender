@@ -11,7 +11,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="0" Background="Orange">
-            <Label Foreground="White"  FontSize="20">GCM Sender</Label>
+            <Label Foreground="White" FontWeight="Bold" FontSize="20">GCM Test Sender</Label>
         </StackPanel>
         <StackPanel Orientation="Horizontal" Grid.Row="1">
             <Button Command="{Binding ShowValidityCheckWindowCommand}" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" ToolTip="Validate API Keys and Device Tokens">

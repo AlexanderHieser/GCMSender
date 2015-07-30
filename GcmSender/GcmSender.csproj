@@ -58,7 +58,6 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Models\GcmModel.cs" />
-    <Compile Include="Models\HttpContent.cs" />
     <Compile Include="Utils\GcmConfig.cs" />
     <Compile Include="Utils\IDialogCallback.cs" />
     <Compile Include="ViewModels\OptionsViewModel.cs" />
