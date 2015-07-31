@@ -21,15 +21,22 @@ namespace GcmSender.Views
     /// </summary>
     public partial class MainWindow : Window
     {
+        GcmViewModel vm;
         public MainWindow()
         {
             InitializeComponent();
-            this.DataContext = new GcmViewModel();
+            vm = new GcmViewModel();
+            this.DataContext = vm;
         }
 
         private void MenuItem_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            vm.GetModel.SaveConfigurationClose();
         }
     }
 }

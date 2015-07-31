@@ -24,15 +24,6 @@ namespace GcmSender.ViewModels
             Model.LoadConfigurationStartup();
         }
 
-        public void Init()
-        {
-            this.SenderID = Model.Configuration.ApitToken;
-            this.DeviceIDs = Model.Configuration.Devices;
-            this.Message = Model.Configuration.Message;
-            this.CollapseKey = Model.Configuration.CollapseKey;
-            this.TimeToLife = Model.Configuration.TimeToLife;
-        }
-
         #endregion
 
         #region Fields
@@ -51,6 +42,11 @@ namespace GcmSender.ViewModels
 
         #region Properties
 
+        public GcmModel GetModel
+        {
+            get { return Model; }
+            set { SetProperty(ref Model, value); }
+        }
         public string SenderID
         {
             get { return _SenderID; }
@@ -69,35 +65,7 @@ namespace GcmSender.ViewModels
             set { SetProperty(ref _DeviceTokensToTest, value); }
         }
 
-        public string CollapseKey
-        {
-            get { return _CollapseKey; }
-            set { SetProperty(ref _CollapseKey, value); }
-        }
-
-        public string TimeToLife
-        {
-            get { return _TimeToLife; }
-            set { SetProperty(ref _TimeToLife, value); }
-        }
-
-        public bool DryRun
-        {
-            get { return _DryRun; }
-            set { SetProperty(ref _DryRun, value); }
-        }
-
-        public string DeviceIDs
-        {
-            get { return _DeviceIDs; }
-            set { SetProperty(ref _DeviceIDs, value); }
-        }
-
-        public string Message 
-        {
-            get { return _Message; }
-            set { SetProperty(ref _Message, value); }
-        }
+ 
 
 
         #endregion
@@ -106,11 +74,6 @@ namespace GcmSender.ViewModels
 
         public Command SendCommand {
             get { return new Command(SendMessage);}
-        }
-
-        public Command ClearCommand
-        {
-            get { return new Command(ClearAll); }
         }
 
         public Command ShowOptionsWindowCommand
@@ -131,7 +94,7 @@ namespace GcmSender.ViewModels
 
         #endregion
 
-#region Methods
+        #region Methods
 
         /// <summary>
         /// Sends the message.
@@ -139,17 +102,6 @@ namespace GcmSender.ViewModels
         private void SendMessage()
         {
 
-        }
-
-        /// <summary>
-        /// Clears all.
-        /// </summary>
-        private void ClearAll()
-        {
-            SenderID = string.Empty;
-            Message = string.Empty;
-            DeviceIDs = string.Empty;
-            
         }
 
         /// <summary>
@@ -198,9 +150,6 @@ namespace GcmSender.ViewModels
             }
         }
         #endregion
-
-
- 
 
     }
 }

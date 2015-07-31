@@ -81,33 +81,50 @@ namespace GcmSender.Models
             } return null;
         }
 
+        public bool SaveConfigurationClose()
+        {
+            if (serializeConfiguration(Configuration))
+            {
+                return true;
+            } return false;
+        }
+
 
         public void CheckKeyValidity(string key, string tokenToTest)
         {
-            String[] tokens = tokenToTest.Split(';');
             try
             {
                 ValidityRequest = HttpWebRequest.Create(Configuration.GCMServerURL);
                 ValidityRequest.Method = "post";
                 ValidityRequest.Headers.Add(string.Format("Authorization: key={0}", key));
-                ValidityRequest.ContentType = "application/json";
+                //Create token Json
+                if (!string.IsNullOrEmpty(tokenToTest))
+                {
+                String[] tokens = tokenToTest.Split(';');
+
                 JObject o = new JObject();
                 o.Add("registration_ids", new JArray(tokens));
                 ValidityRequest.ContentLength = o.ToString().Length;
-                using(StreamWriter writer = new StreamWriter(ValidityRequest.GetRequestStream())) {
-                       writer.Write(o.ToString());
-                }
+                ValidityRequest.ContentType = "application/json";
 
-                Console.WriteLine(o.ToString());
-                HttpWebResponse response = (HttpWebResponse)ValidityRequest.GetResponse();
-                StringBuilder sb = new StringBuilder();
-                using(StreamReader reader = new StreamReader(response.GetResponseStream()))
+                using (StreamWriter writer = new StreamWriter(ValidityRequest.GetRequestStream()))
                 {
-                    sb.Append(reader.ReadLine());
-                };
+                    writer.Write(o.ToString());
+                }
+                Console.WriteLine(o.ToString());
+
+                }
+                else
+                {
+                    ValidityRequest.ContentLength = 0;
+                }
+          
+          
+                HttpWebResponse response = (HttpWebResponse)ValidityRequest.GetResponse();
+                
                 if (response.StatusCode == HttpStatusCode.OK)
                 {
-                    MessageBox.Show("Your token is valid \n "+ sb.ToString(), "Token is valid", MessageBoxButton.OK, MessageBoxImage.Information);
+                    MessageBox.Show("Your token is valid \n ", "Token is valid", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
             }
             catch (WebException e)
